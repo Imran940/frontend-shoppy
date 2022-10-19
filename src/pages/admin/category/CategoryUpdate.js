@@ -19,7 +19,7 @@ function CategoryUpdate({ match, history }) {
     getACategory(slug)
       .then((resp) => {
         console.log(resp);
-        setName(resp.data.category[0].name);
+        setName(resp.data.name);
       })
       .catch((err) => {
         console.log(err);

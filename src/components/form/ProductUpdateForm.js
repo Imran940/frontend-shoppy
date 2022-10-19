@@ -23,7 +23,6 @@ function ProductUpdateForm({
     brand,
     selectedSubs,
   } = formData;
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -136,7 +135,7 @@ function ProductUpdateForm({
                 }));
               }}
               className="form-control"
-              value={selectedSubs}
+              value={selectedSubs.map((s) => s._id)}
             >
               {subs &&
                 subs.length > 0 &&

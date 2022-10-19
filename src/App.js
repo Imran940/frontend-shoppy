@@ -34,6 +34,7 @@ import ShowCategoryAndSubsProducts from "./pages/ShowCategoryAndSubsProducts";
 import Checkout from "./pages/Checkout";
 import CouponCreate from "./pages/admin/coupon/CouponCreate";
 import Payment from "./pages/Payment";
+import Demo from "./Demo";
 function App() {
   let dispatch = useDispatch();
   const { user, drawer } = useSelector((state) => ({ ...state }));
@@ -83,9 +84,9 @@ function App() {
       <Header />
       <SideDrawer />
       <ToastContainer />
-
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/demo" component={Demo} />
         <Route exact path="/shop" component={Shop} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/product/:slug" component={Product} />

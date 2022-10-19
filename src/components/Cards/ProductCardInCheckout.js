@@ -78,9 +78,9 @@ function ProductCardInCheckout({ p }) {
       type: "ADD_TO_CART",
       payload: newCart,
     });
-    // if (newCart && newCart.length > 1) {
-    //   saveCart(newCart, user?.token);
-    // }
+    if (newCart && newCart.length > 0) {
+      saveCart(newCart, user?.token);
+    }
   };
   return (
     <tbody>

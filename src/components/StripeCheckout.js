@@ -95,7 +95,12 @@ function StripeCheckout() {
         <Card
           cover={
             <img
-              src={cart && cart.length > 0 && cart[0].images[0].url}
+              src={
+                cart &&
+                cart.length > 0 &&
+                cart[0].images.length > 0 &&
+                cart[0].images[0].url
+              }
               style={{
                 height: "200px",
                 objectFit: "contain",

@@ -3,9 +3,12 @@ import {
   ClockCircleOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserNav from "../../components/nav/UserNav";
+import Invoice from "../../components/user/Invoice";
 import ShowPaymentInfo from "../../components/user/ShowPaymentInfo";
 import { getAllUserOrders, getCart } from "../../functions/user";
 function History() {
@@ -17,7 +20,7 @@ function History() {
   useEffect(() => {
     getCart(token).then((resp) => {
       console.log(resp);
-      resp.data.products?.map((p, i) => {
+      resp.data?.products?.map((p, i) => {
         cartArr.push({
           ...p.product,
           count: resp.data.products[i].count,
@@ -69,13 +72,27 @@ function History() {
       </tbody>
     </table>
   );
+
+  const showPdfDownloadLink = (order) => (
+    <PDFDownloadLink
+      document={<Invoice order={order} />}
+      fileName={`Invoice-${new Date(
+        order.paymentIntent.created * 1000
+      ).toLocaleString()}.pdf`}
+      className="btn btn-sm btn-block btn-outline-primary"
+    >
+      Download Pdf
+    </PDFDownloadLink>
+  );
+
   const showEachOrders = () =>
     orders?.map((order, i) => (
       <div key={i} className="m-5 p-3 card">
         <ShowPaymentInfo order={order} />
-
-        {console.log(order)}
         {showOrderInTable(order)}
+        <div className="row">
+          <div className="col">{showPdfDownloadLink(order)}</div>
+        </div>
       </div>
     ));
   return (
