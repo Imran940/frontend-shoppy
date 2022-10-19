@@ -33,8 +33,8 @@ function SubUpdate({ match, history }) {
     getASub(slug)
       .then((resp) => {
         console.log(resp);
-        setName(resp.data.sub[0].name);
-        setParentId(resp.data.sub[0].parent);
+        setName(resp.data.name);
+        setParentId(resp.data.parent);
       })
       .catch((err) => {
         console.log(err);

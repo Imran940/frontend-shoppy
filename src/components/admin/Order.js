@@ -1,7 +1,7 @@
 import React from "react";
 import ShowPaymentInfo from "../user/ShowPaymentInfo";
 
-const values = [
+export const orderStatusValues = [
   { name: "Not Processed", value: "Not processed" },
   { name: "Processing", value: "Processing" },
   { name: "Dispatched", value: "Dispatched" },
@@ -22,7 +22,7 @@ const Order = ({ orders, handleStatusChange }) => (
               defaultValue={order.orderStatus}
               name="status"
             >
-              {values?.map((v, i) => (
+              {orderStatusValues?.map((v, i) => (
                 <option value={v.value}>{v.name}</option>
               ))}
             </select>

@@ -48,9 +48,9 @@ function ProductUpdate({ history }) {
 
     getProduct(slug)
       .then((resp) => {
-        console.log(resp);
-        setFormData((oldFormData) => ({ ...oldFormData, ...resp.data[0] }));
-        getSubsCategoryByCid(token, resp.data[0].category._id, false); // pre-populate sub-categories
+        console.log({ ...initialFormData, ...resp.data });
+        setFormData((oldFormData) => ({ ...oldFormData, ...resp.data }));
+        getSubsCategoryByCid(token, resp.data.category._id, false); // pre-populate sub-categories
       })
       .catch((err) => console.log(err));
   }, []);

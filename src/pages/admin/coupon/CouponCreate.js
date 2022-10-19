@@ -19,7 +19,11 @@ function CouponCreate() {
   const { user } = useSelector((state) => ({ ...state }));
 
   let token = user.token;
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getAllCoupons(token).then((resp) => {
+      setCoupons(resp.data);
+    });
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ name, discount, expiry: expiry._d });

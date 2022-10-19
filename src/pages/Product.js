@@ -9,10 +9,12 @@ import {
   getSubsByCid,
   updateStarChange,
 } from "../functions/product";
+import { addToWishList } from "../functions/user";
 let newStar;
 let productId;
 function Product({ match }) {
   const { slug } = match.params;
+  //const [name, setName] = useState("");
   const [product, setProduct] = useState({});
   const [related, setRelated] = useState([]);
   const [subs, setSubs] = useState([]);
@@ -24,18 +26,18 @@ function Product({ match }) {
     getProduct(slug) // get a product by slug
       .then((resp) => {
         console.log(resp);
-        setProduct(resp.data[0]);
-        getSubsByCid(token, resp.data[0].category._id).then((resp) => {
+        setProduct(resp.data);
+        getSubsByCid(token, resp.data.category._id).then((resp) => {
           // get subs category based on category
           setSubs(resp.data);
         });
         //checking for ratings
-        let existingRatingUser = resp.data[0].ratings.find(
+        let existingRatingUser = resp.data.ratings.find(
           (r) => r.postedBy.toString() == user._id.toString()
         );
         existingRatingUser && setStar(existingRatingUser.star);
         //getReltaedProducts
-        getRelatedProducts(resp.data && resp.data[0]._id)
+        getRelatedProducts(resp.data && resp.data._id)
           .then((resp) => {
             console.log(resp);
             setRelated(resp.data);
@@ -78,6 +80,16 @@ function Product({ match }) {
       })
       .catch((err) => console.log(err));
   };
+
+  const handleAddToWishList = (productId) => {
+    try {
+      addToWishList(token, productId).then((resp) => {
+        console.log(resp);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="container-fluid">
       <div className="row pt-4">
@@ -87,6 +99,7 @@ function Product({ match }) {
           handleStarRatingChange={handleStarRatingChange}
           handleStarSubmit={handleStarSubmit}
           star={star}
+          handleAddToWishList={handleAddToWishList}
         />
       </div>
       <div className="row">

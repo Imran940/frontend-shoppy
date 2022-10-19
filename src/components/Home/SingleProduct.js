@@ -19,6 +19,7 @@ function SingleProduct({
   subs,
   star,
   handleStarSubmit,
+  handleAddToWishList,
 }) {
   const {
     _id,
@@ -124,10 +125,13 @@ function SingleProduct({
               </a>
             </Tooltip>,
             <>
-              <Link to="/">
-                <HeartOutlined className="text-info" />
+              <>
+                <HeartOutlined
+                  className="text-info"
+                  onClick={() => handleAddToWishList(_id)}
+                />
                 <br /> Add to Wishlist
-              </Link>
+              </>
             </>,
             <>
               <RatingModal handleStarSubmit={handleStarSubmit}>
