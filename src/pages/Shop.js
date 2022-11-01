@@ -45,6 +45,50 @@ function Shop() {
   const [shipping, setShipping] = useState("");
   const { user, search } = useSelector((state) => ({ ...state }));
   let queryText = search.text;
+
+  const fetchproductsBasedOnQuery = (query) => {
+    fetchProductsByFilter(query)
+      .then((resp) => {
+        setLoading(false);
+        setProducts(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+  //for query text
+  useEffect(() => {
+    resetOtherFilterOptions("text");
+    setLoading(true);
+    console.log(queryText);
+    const delayed = setTimeout(() => {
+      if (queryText) {
+        fetchproductsBasedOnQuery({ query: queryText });
+      }
+    }, 300);
+    return () => clearTimeout(delayed);
+  }, [queryText]);
+
+  // For price filter
+  useEffect(() => {
+    if (priceOk) fetchproductsBasedOnQuery({ price });
+  }, [priceOk]);
+  const handlePriceChange = (value) => {
+    resetOtherFilterOptions("price");
+    setPrice(value);
+    setTimeout(() => {
+      setPriceOk(!priceOk);
+    }, 300);
+  };
+
+  //for category
+  useEffect(() => {
+    if (categoryIds.length > 0) {
+      fetchproductsBasedOnQuery({ category: categoryIds });
+    }
+  }, [categoryIds]);
+
   useEffect(() => {
     setLoading(true);
     getAllCategories().then((resp) => {
@@ -68,37 +112,7 @@ function Shop() {
         console.log(err);
       });
   };
-  //for query text
-  useEffect(() => {
-    resetOtherFilterOptions("text");
-    setLoading(true);
-    console.log(queryText);
-    const delayed = setTimeout(() => {
-      if (queryText) {
-        fetchproductsBasedOnQuery({ query: queryText });
-      }
-    }, 300);
-    return () => clearTimeout(delayed);
-  }, [queryText]);
 
-  // For price filter
-  useEffect(() => {
-    fetchproductsBasedOnQuery({ price });
-  }, [priceOk]);
-  const handlePriceChange = (value) => {
-    resetOtherFilterOptions("price");
-    setPrice(value);
-    setTimeout(() => {
-      setPriceOk(!priceOk);
-    }, 300);
-  };
-
-  //for category
-  useEffect(() => {
-    if (categoryIds.length > 0) {
-      fetchproductsBasedOnQuery({ category: categoryIds });
-    }
-  }, [categoryIds]);
   const handleCategoryChange = (e) => {
     resetOtherFilterOptions("category");
     let categoryArray = [...categoryIds];
@@ -165,17 +179,7 @@ function Shop() {
     setShipping(e.target.value);
     fetchproductsBasedOnQuery({ shipping: e.target.value });
   };
-  const fetchproductsBasedOnQuery = (query) => {
-    fetchProductsByFilter(query)
-      .then((resp) => {
-        setLoading(false);
-        setProducts(resp.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
+
   return (
     <div className="container-fluid">
       <div className="row">

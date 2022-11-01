@@ -70,6 +70,7 @@ function StripeCheckout() {
     } else {
       console.log(JSON.stringify(payload, null, 4));
       //empty the cart in backend
+      console.log({ token });
       emptyCart(token);
       //create order and save in db
       createOrder(payload, token).then((res) => console.log(res));

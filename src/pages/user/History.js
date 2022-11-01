@@ -58,8 +58,8 @@ function History() {
             <td>{p.product.title}</td>
             <td>{p.product.price}</td>
             <td>{p.product.brand}</td>
-            <td>{p.count}</td>
             <td>{p.color}</td>
+            <td>{p.count}</td>
             <td>
               {p.product.shipping === "Yes" ? (
                 <CheckCircleOutlined className="h4 text-success" />
