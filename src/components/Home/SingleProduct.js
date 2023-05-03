@@ -10,6 +10,7 @@ import RatingModal from "../modal/RatingModal";
 import ShowAverageRating from "./ShowAverageRating";
 import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+import { saveCart } from "../../functions/user";
 
 const { TabPane } = Tabs;
 const { Meta } = Card;
@@ -39,7 +40,7 @@ function SingleProduct({
   } = product;
   let dispatch = useDispatch();
   const [tooltip, setTooltip] = useState("Click to add");
-  const { cart } = useSelector((state) => ({ ...state }));
+  const { cart, user } = useSelector((state) => ({ ...state }));
   useEffect(() => {
     cart?.map((c, i) => {
       if (c._id == _id) {
@@ -71,6 +72,7 @@ function SingleProduct({
           payload: true,
         });
       }
+      saveCart(cart, user?.token);
       setTooltip("Added");
     }
   };
